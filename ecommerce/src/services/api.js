@@ -1,7 +1,9 @@
 import axios from 'axios';
 
 const API = axios.create({
-  baseURL: 'http://localhost:5000/api', // Hamara Node.js backend port 5000 par chal raha hai
+  baseURL: process.env.REACT_APP_API_URL 
+    ? `${process.env.REACT_APP_API_URL}/api` 
+    : 'http://localhost:5000/api', // Local development ke liye fallback
 });
 
 // Jab bhi user login ho ga, token localStorage mein save ho ga. Yeh interceptor har request ke sath token khud ba khud bhej dega.
@@ -25,4 +27,3 @@ export const updateProduct = (id, productData) => API.put(`/products/${id}`, pro
 // Order APIs
 export const fetchOrders = () => API.get('/orders');
 export const updateOrderStatus = (id, statusData) => API.put(`/orders/${id}`, statusData);
-
