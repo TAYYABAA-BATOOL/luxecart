@@ -31,7 +31,8 @@ export default function Login({ onLoginSuccess }) {
         if (onLoginSuccess) onLoginSuccess(data.user);
       }
     } catch (err) {
-setError(err.response?.data?.error || err.response?.data?.message || err.message || 'Something went wrong!');    }
+      setError(err.response?.data?.error || err.response?.data?.message || err.message || 'Something went wrong!');
+    }
   };
 
   return (
@@ -58,7 +59,6 @@ setError(err.response?.data?.error || err.response?.data?.message || err.message
                 onChange={handleChange} 
                 required 
                 className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:border-amber-600"
-                placeholder="Tayyaba Batool"
               />
             </div>
           )}
@@ -72,7 +72,6 @@ setError(err.response?.data?.error || err.response?.data?.message || err.message
               onChange={handleChange} 
               required 
               className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:border-amber-600"
-              placeholder="admin@luxury.com"
             />
           </div>
 
@@ -85,7 +84,6 @@ setError(err.response?.data?.error || err.response?.data?.message || err.message
               onChange={handleChange} 
               required 
               className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:border-amber-600"
-              placeholder="••••••••"
             />
           </div>
 

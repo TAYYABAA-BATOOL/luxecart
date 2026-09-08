@@ -31,7 +31,6 @@ export default function AuthModal({
                 required 
                 value={authForm.name}
                 onChange={(e) => setAuthForm({ ...authForm, name: e.target.value })}
-                placeholder="Tayyaba Batool" 
                 className="w-full border border-amber-300 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-amber-800 text-[#2D2A26]"
               />
             </div>
@@ -44,7 +43,6 @@ export default function AuthModal({
               required 
               value={authForm.email}
               onChange={(e) => setAuthForm({ ...authForm, email: e.target.value })}
-              placeholder="tayyaba@example.com" 
               className="w-full border border-amber-300 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-amber-800 text-[#2D2A26]"
             />
           </div>
@@ -56,7 +54,6 @@ export default function AuthModal({
               required 
               value={authForm.password}
               onChange={(e) => setAuthForm({ ...authForm, password: e.target.value })}
-              placeholder="••••••••" 
               className="w-full border border-amber-300 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-amber-800 text-[#2D2A26]"
             />
           </div>
@@ -74,7 +71,7 @@ export default function AuthModal({
               onClick={() => setIsLoginMode(!isLoginMode)}
               className="text-xs text-amber-900 hover:underline font-medium cursor-pointer"
             >
-             {isLoginMode ? "Don't have an account? Sign up" : "Already have an account? Login"}
+               {isLoginMode ? "Don't have an account? Sign up" : "Already have an account? Login"}
             </button>
           </div>
         </form>

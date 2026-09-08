@@ -40,14 +40,6 @@ export default function CheckoutModal({ isOpen, onClose, cart, totalPrice = 0, o
       }
     }
 
-    // Validate JazzCash number if JazzCash is selected
-    if (formData.paymentMethod === 'jazzcash') {
-      if (!formData.jazzcashNumber || formData.jazzcashNumber.length < 11) {
-        alert('Please enter a valid 11-digit JazzCash mobile account number.');
-        return;
-      }
-    }
-
     setIsProcessing(true);
 
     // Simulate secure payment gateway verification delay
@@ -59,9 +51,6 @@ export default function CheckoutModal({ isOpen, onClose, cart, totalPrice = 0, o
 
       if (formData.paymentMethod === 'card') {
         paymentLabel = 'Credit Card (Paid)';
-        orderStatus = 'Processing';
-      } else if (formData.paymentMethod === 'jazzcash') {
-        paymentLabel = 'JazzCash Mobile Account (Paid)';
         orderStatus = 'Processing';
       }
 
@@ -77,8 +66,7 @@ export default function CheckoutModal({ isOpen, onClose, cart, totalPrice = 0, o
         total: totalPrice,
         status: orderStatus,
         paymentMethod: paymentLabel,
-        cardDetails: formData.paymentMethod === 'card' ? { ...cardData, cardNumber: '**** **** **** ' + cardData.cardNumber.slice(-4) } : null,
-        jazzcashNumber: formData.paymentMethod === 'jazzcash' ? formData.jazzcashNumber : null
+        cardDetails: formData.paymentMethod === 'card' ? { ...cardData, cardNumber: '**** **** **** ' + cardData.cardNumber.slice(-4) } : null
       };
 
       // Purane orders fetch karke naya order add karna
@@ -116,7 +104,6 @@ export default function CheckoutModal({ isOpen, onClose, cart, totalPrice = 0, o
               required 
               value={formData.fullName} 
               onChange={handleChange}
-              placeholder="Tayyaba Batool"
               className="w-full border border-amber-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#2D2A26]"
             />
           </div>
@@ -130,7 +117,6 @@ export default function CheckoutModal({ isOpen, onClose, cart, totalPrice = 0, o
                 required 
                 value={formData.email} 
                 onChange={handleChange}
-                placeholder="tayyaba@example.com"
                 className="w-full border border-amber-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#2D2A26]"
               />
             </div>
@@ -142,7 +128,6 @@ export default function CheckoutModal({ isOpen, onClose, cart, totalPrice = 0, o
                 required 
                 value={formData.phone} 
                 onChange={handleChange}
-                placeholder="+92 300 1234567"
                 className="w-full border border-amber-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#2D2A26]"
               />
             </div>
@@ -156,7 +141,6 @@ export default function CheckoutModal({ isOpen, onClose, cart, totalPrice = 0, o
               rows="2"
               value={formData.address} 
               onChange={handleChange}
-              placeholder="House #, Street, Area"
               className="w-full border border-amber-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#2D2A26]"
             ></textarea>
           </div>
@@ -170,7 +154,6 @@ export default function CheckoutModal({ isOpen, onClose, cart, totalPrice = 0, o
                 required 
                 value={formData.city} 
                 onChange={handleChange}
-                placeholder="Mian Channu / Lahore"
                 className="w-full border border-amber-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#2D2A26]"
               />
             </div>
@@ -184,7 +167,6 @@ export default function CheckoutModal({ isOpen, onClose, cart, totalPrice = 0, o
               >
                 <option value="cod">Cash on Delivery (COD)</option>
                 <option value="card">Credit / Debit Card</option>
-                <option value="jazzcash">JazzCash Mobile Account</option>
               </select>
             </div>
           </div>
@@ -200,7 +182,6 @@ export default function CheckoutModal({ isOpen, onClose, cart, totalPrice = 0, o
                   type="text" 
                   name="cardholderName"
                   required
-                  placeholder="Tayyaba Batool"
                   value={cardData.cardholderName}
                   onChange={handleCardChange}
                   className="w-full border border-gray-300 rounded-lg px-3 py-2 text-xs focus:outline-none focus:border-amber-800 bg-white"
@@ -214,7 +195,6 @@ export default function CheckoutModal({ isOpen, onClose, cart, totalPrice = 0, o
                   name="cardNumber"
                   maxLength="16"
                   required
-                  placeholder="4532 0000 0000 8920"
                   value={cardData.cardNumber}
                   onChange={handleCardChange}
                   className="w-full border border-gray-300 rounded-lg px-3 py-2 text-xs focus:outline-none focus:border-amber-800 bg-white"
@@ -228,7 +208,6 @@ export default function CheckoutModal({ isOpen, onClose, cart, totalPrice = 0, o
                     type="text" 
                     name="expiry"
                     required
-                    placeholder="MM/YY"
                     value={cardData.expiry}
                     onChange={handleCardChange}
                     className="w-full border border-gray-300 rounded-lg px-3 py-2 text-xs focus:outline-none focus:border-amber-800 bg-white"
@@ -241,34 +220,11 @@ export default function CheckoutModal({ isOpen, onClose, cart, totalPrice = 0, o
                     name="cvc"
                     maxLength="4"
                     required
-                    placeholder="123"
                     value={cardData.cvc}
                     onChange={handleCardChange}
                     className="w-full border border-gray-300 rounded-lg px-3 py-2 text-xs focus:outline-none focus:border-amber-800 bg-white"
                   />
                 </div>
-              </div>
-            </div>
-          )}
-
-          {/* Dynamic JazzCash Inputs (Only displays when JazzCash is selected) */}
-          {formData.paymentMethod === 'jazzcash' && (
-            <div className="p-4 bg-amber-50/70 rounded-xl border border-amber-300 space-y-3 mt-3 animate-fadeIn">
-              <h4 className="text-xs font-bold uppercase tracking-wider text-amber-900">JazzCash Account Details</h4>
-              
-              <div>
-                <label className="block text-[11px] font-medium text-gray-700 mb-1">JazzCash Mobile Number</label>
-                <input 
-                  type="text" 
-                  name="jazzcashNumber"
-                  maxLength="11"
-                  required
-                  placeholder="03001234567"
-                  value={formData.jazzcashNumber || ''}
-                  onChange={handleChange}
-                  className="w-full border border-amber-300 rounded-lg px-3 py-2 text-xs focus:outline-none focus:border-amber-800 bg-white"
-                />
-                <p className="text-[10px] text-gray-500 mt-1">An MPIN prompt will be triggered on this mobile number.</p>
               </div>
             </div>
           )}
@@ -291,9 +247,7 @@ export default function CheckoutModal({ isOpen, onClose, cart, totalPrice = 0, o
               <span>
                 {formData.paymentMethod === 'card' 
                   ? `Pay $${totalPrice.toFixed(2)} Now` 
-                  : formData.paymentMethod === 'jazzcash' 
-                    ? `Pay via JazzCash ($${totalPrice.toFixed(2)})` 
-                    : 'Confirm & Place Order'}
+                  : 'Confirm & Place Order'}
               </span>
             )}
           </button>
